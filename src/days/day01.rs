@@ -1,22 +1,14 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
+use crate::utils;
 
 pub fn total_distance(filename: &str) -> Result<i32, std::io::Error> {
-    let file = File::open(filename)?;
-    let reader = BufReader::new(file);
-
+    let lines = utils::slices_from_txt(filename)?;
     let (mut lst1, mut lst2) = (vec![], vec![]);
 
-    for line in reader.lines() {
-        let line = line?;
-        let numbers: Vec<i32> = line
-            .split_whitespace()
-            .filter_map(|s| s.parse().ok())
-            .collect();
+    for line in lines.iter() {
 
-        if numbers.len() == 2 {
-            lst1.push(numbers[0]);
-            lst2.push(numbers[1]);
+        if line.len() == 2 {
+            lst1.push(line[0]);
+            lst2.push(line[1]);
         }
     }
 
