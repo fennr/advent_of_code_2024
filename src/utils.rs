@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::io::{BufRead, BufReader, Read};
 
 pub fn slices_from_txt(filename: &str) -> Result<Vec<Vec<i32>>, std::io::Error> {
     let file = File::open(filename)?;
@@ -16,4 +16,13 @@ pub fn slices_from_txt(filename: &str) -> Result<Vec<Vec<i32>>, std::io::Error> 
         out.push(numbers);
     }
     Ok(out)
+}
+
+pub fn str_from_txt(filename: &str) -> Result<String, std::io::Error> {
+    let file = File::open(filename)?;
+    let mut reader = BufReader::new(file);
+
+    let mut contents = String::new();
+    reader.read_to_string(&mut contents)?;
+    Ok(contents)
 }
